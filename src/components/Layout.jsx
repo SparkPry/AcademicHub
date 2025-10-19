@@ -1,0 +1,19 @@
+import React from "react";
+import { useLocation } from "react-router-dom";
+import Navbar from "./navBar";
+import Footer from "./Footer";
+
+export default function Layout({ children }) {
+  const location = useLocation();
+
+  // Pages where Navbar + Footer should be hidden
+  const hideNavAndFooter = ["/login", "/signup"].includes(location.pathname);
+
+  return (
+    <>
+      {!hideNavAndFooter && <Navbar />}
+      <main>{children}</main>
+      {!hideNavAndFooter && <Footer />}
+    </>
+  );
+}

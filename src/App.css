@@ -1,0 +1,134 @@
+
+/* aside */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-slide {
+  animation: slideIn 0.3s ease-out;
+}
+/* ========== */
+
+
+@keyframes particle-fast {
+  0% { opacity: 0; transform: translateY(0) scale(0.7); }
+  50% { opacity: 1; transform: translateY(-30px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0.7); }
+}
+
+.animate-particle-fast {
+  animation: particle-fast infinite ease-in-out;
+}
+
+
+/* ===== Floating Particles ===== */
+@keyframes float {
+  0%, 100% { opacity: 0; transform: translateY(0); }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-100vh); }
+}
+
+.animate-float {
+  animation: float 10s linear infinite;
+}
+/* ===== Building Glow ===== */
+@keyframes building-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.3); }
+}
+
+.animate-building-glow {
+  animation: building-glow 4s ease-in-out infinite;
+}
+
+/* ===== Nature Sway ===== */
+@keyframes sway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(10px) rotate(5deg); }
+}
+
+.animate-sway {
+  animation: sway 4s ease-in-out infinite;
+}
+
+/* ===== Holographic Float ===== */
+@keyframes holo-float {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  50% { transform: translateY(-20px) rotateY(10deg); }
+}
+
+.animate-holo-float {
+  animation: holo-float 4s ease-in-out infinite;
+}
+
+/* ===== Card Float ===== */
+@keyframes card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-card-float {
+  animation: card-float 5s ease-in-out infinite;
+}
+
+/* ===== Energy Icon Pulse ===== */
+@keyframes energy-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(34, 211, 238, 0.6); }
+}
+
+.animate-energy-pulse {
+  animation: energy-pulse 3s ease-in-out infinite;
+}
+
+/* ===== AI Assistant Pulse ===== */
+@keyframes assistant-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 40px rgba(34, 211, 238, 0.5); }
+  50% { transform: scale(1.1); box-shadow: 0 15px 60px rgba(34, 211, 238, 0.7); }
+}
+
+.animate-assistant-pulse {
+  animation: assistant-pulse 2s ease-in-out infinite;
+}
+
+/* ===== Fade In Up (Hero & Sections) ===== */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out;
+}
+
+/* ===== Fade In Delayed ===== */
+@keyframes fade-in-delayed {
+  0% { opacity: 0; transform: translateY(20px); }
+  50% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in-delayed 2s ease-out;
+}
+
+/* ===== Spin Slowly ===== */
+@keyframes spin-slow {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* ===== Hover Rotate ===== */
+.hover\:rotate-360:hover {
+  transform: rotate(360deg);
+}
