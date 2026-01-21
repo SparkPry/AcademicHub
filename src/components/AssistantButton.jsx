@@ -4,7 +4,7 @@ import { Sparkles, X, Send } from "lucide-react";
 export default function AssistantButton() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { from: "ai", text: "Hello! I'm your EduVerse Assistant 🤖" },
+    { from: "ai", text: "Hello! I'm your AngkorEdu Assistant 🤖" },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -57,10 +57,10 @@ export default function AssistantButton() {
 
       {/* Chat Window */}
       {open && (
-        <div className="fixed bottom-36 right-1 z-[9998] w-80 md:w-96 h-[28rem] bg-slate-900/90 backdrop-blur-md border border-cyan-400/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+        <div className="fixed bottom-36 right-1 z-[9998] w-80 md:w-96 h-[28rem] dark:bg-slate-900/90 backdrop-blur-md border border-cyan-400/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-cyan-400/30">
-            <h3 className="text-lg font-bold text-cyan-300">EduVerse Assistant</h3>
+            <h3 className="text-lg font-bold text-cyan-300">AngkorEdu Assistant</h3>
             <button
               onClick={() => setOpen(false)}
               className="text-slate-400 hover:text-red-400 transition-colors"

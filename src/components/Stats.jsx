@@ -11,7 +11,7 @@ const iconMap = {
 
 export default function Stats() {
   return (
-    <section className="relative z-30 py-20 px-6 bg-slate-900/50 backdrop-blur-xl">
+    <section className="relative z-30 py-20 px-6 dark:bg-slate-900/50 backdrop-blur-xl">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((stat, i) => (
           <div

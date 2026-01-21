@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { Cpu, Leaf, Dna, Rocket } from "lucide-react";
+import { Code, Smartphone, Database, ShieldCheck } from "lucide-react";
 import { courses } from "../data/coursesData";
 
 const iconMap = {
-  cpu: <Cpu className="w-16 h-16" />,
-  leaf: <Leaf className="w-16 h-16" />,
-  dna: <Dna className="w-16 h-16" />,
-  rocket: <Rocket className="w-16 h-16" />,
+  code: <Code className="w-16 h-16" />,
+  smartphone: <Smartphone className="w-16 h-16" />,
+  database: <Database className="w-16 h-16" />,
+  shield: <ShieldCheck className="w-16 h-16" />,
 };
+
 
 export default function Courses() {
   const [activeCard, setActiveCard] = useState(null);
 
   return (
-    <section className="relative z-30 py-24 px-6 bg-gradient-to-b from-transparent to-slate-900/50">
-      <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
+    <section className="relative z-30 py-24 px-6 dark:bg-gradient-to-b from-transparent to-slate-900/50">
+      <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 bg-slate-900/90  dark:bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent p-4">
         Future-Ready Learning Paths
       </h2>
 
@@ -22,7 +23,8 @@ export default function Courses() {
         {courses.map((course, i) => (
           <div
             key={i}
-            className="group relative bg-gradient-to-br from-slate-800/40 to-emerald-900/30 border border-cyan-400/30 rounded-3xl p-8 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/40 hover:border-cyan-400/60 animate-card-float overflow-hidden"
+            // group relative  dark:bg-gradient-to-br from-slate-800/40 to-emerald-900/30 border border-cyan-400/30 rounded-3xl p-8 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/40 hover:border-cyan-400/60 animate-card-float overflow-hidden
+            className="group relative bg-white dark:bg-slate-900   border-2 border-cyan-400/30 rounded-3xl p-8 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/40 hover:border-cyan-400/60 animate-card-float overflow-hidden"
             style={{ animationDelay: `${i * 0.5}s` }}
             onMouseEnter={() => setActiveCard(i)}
             onMouseLeave={() => setActiveCard(null)}
@@ -38,13 +40,13 @@ export default function Courses() {
               {course.title}
             </h3>
 
-            <p className="text-slate-300 mb-6 leading-relaxed">{course.desc}</p>
+            <p className="text-slate-500 mb-6 leading-relaxed">{course.desc}</p>
 
             <div className="flex flex-wrap gap-2">
               {course.tags.map((tag, j) => (
                 <span
                   key={j}
-                  className="px-4 py-2 bg-cyan-400/10 border border-cyan-400/30 rounded-full text-xs text-cyan-400 group-hover:bg-cyan-400/20 transition-colors"
+                  className="px-4 py-2 dark:bg-cyan-400/10 border border-cyan-400/30 rounded-full text-xs text-cyan-400 group-hover:bg-cyan-400/20 transition-colors"
                 >
                   {tag}
                 </span>

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import EnergyIcons from "../components/EnergyIcons";
+import AssistantButton from "../components/AssistantButton";
+
+
+
 import {
   Clock,
   BookOpen,
@@ -9,7 +14,7 @@ import {
   ChevronRight,
   CheckCircle,
 } from "lucide-react";
-import coursesDataPage from "../data/coursesDataPage";
+import coursesDataPage from "../data/courseData";
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -63,7 +68,7 @@ export default function CourseDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 text-white py-10 px-6">
+    <div className="min-h-screen dark:bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 text-white py-10 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <Link
@@ -75,7 +80,7 @@ export default function CourseDetail() {
 
         {/* Course Completed */}
         {completed && (
-          <div className="mb-6 p-4 bg-emerald-600/20 border border-emerald-400/40 rounded-xl text-emerald-300 flex items-center gap-3">
+          <div className="mb-6 p-4 dark:bg-emerald-600/20 border-2 border-emerald-400/40 rounded-xl text-emerald-300 flex items-center gap-3">
             <CheckCircle className="w-5 h-5" />
             <span>You have completed this course. 🎉</span>
           </div>
@@ -85,7 +90,7 @@ export default function CourseDetail() {
         {isLearning ? (
           <>
             {/* Video Player */}
-            <div className="bg-slate-900/60 border border-cyan-400/20 rounded-2xl p-4 mb-8">
+            <div className="dark:bg-slate-900/60 border border-cyan-400/20 rounded-2xl p-4 mb-8">
               <iframe
                 className="w-full h-[450px] rounded-xl"
                 src={lessons[currentLesson].video}
@@ -140,7 +145,7 @@ export default function CourseDetail() {
             </div>
 
             {/* Lesson List */}
-            <div className="bg-slate-800/40 border border-cyan-400/20 rounded-2xl p-6">
+            <div className="dark:bg-slate-800/40 border border-cyan-400/20 rounded-2xl p-6">
               <h2 className="text-2xl font-bold text-cyan-300 mb-4">
                 Lesson List
               </h2>
@@ -168,7 +173,7 @@ export default function CourseDetail() {
         ) : (
           <>
             {/* Course Overview */}
-            <div className="bg-slate-800/50 border border-cyan-400/30 rounded-2xl p-8 backdrop-blur-md mb-10">
+            <div className="dark:bg-slate-800/50 border border-cyan-400/30 rounded-2xl p-8 backdrop-blur-md mb-10">
               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8">
                 <div className="w-full lg:w-1/2">
                   <img
@@ -208,6 +213,10 @@ export default function CourseDetail() {
           </>
         )}
       </div>
+
+
+      <EnergyIcons/>
+      <AssistantButton/>
     </div>
   );
 }

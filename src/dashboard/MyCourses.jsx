@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen, CheckCircle, PlayCircle } from "lucide-react";
-import coursesDataPage from "../data/coursesDataPage";
+import courseData from "../data/courseData";
+import EnergyIcons from "../components/EnergyIcons";
+import AssistantButton from "../components/AssistantButton";
 
 export default function MyCourses() {
   const [progressData, setProgressData] = useState([]);
@@ -23,7 +25,7 @@ export default function MyCourses() {
   }, []);
 
   useEffect(() => {
-    const savedProgress = coursesDataPage.map((course) => {
+    const savedProgress = courseData.map((course) => {
       const data =
         JSON.parse(localStorage.getItem(`course_${course.id}_progress`)) || {};
       const currentLesson = data.currentLesson || 0;
@@ -43,7 +45,7 @@ export default function MyCourses() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 text-white py-20 px-6 overflow-hidden relative">
+    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 overflow-x-hidden py-24">
       {/* Floating Neon Particles */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {particles.map((p) => {
@@ -124,7 +126,7 @@ export default function MyCourses() {
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
-                className="group relative bg-slate-800/30 border border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50"
+                className="group relative dark:bg-slate-800/30 border border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50"
                 onMouseEnter={() => setHoveredCard(course.id)}
                 onMouseLeave={() => {
                   setHoveredCard(null);
@@ -146,7 +148,7 @@ export default function MyCourses() {
                 <h2 className="text-xl font-bold mb-2 text-cyan-400 group-hover:text-emerald-400 transition-colors">
                   {course.title}
                 </h2>
-                <p className="text-slate-300 text-sm mb-4">
+                <p className="text-slate-400 dark:text-slate-300 text-sm mb-4">
                   {course.description}
                 </p>
 
@@ -265,6 +267,10 @@ export default function MyCourses() {
           animation: glow-bar 2s ease-in-out infinite alternate;
         }
       `}</style>
+
+    <EnergyIcons/>
+    <AssistantButton/>
+
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="relative z-30 py-12 px-6 text-center bg-slate-900/90 border-t border-cyan-400/20">
       <p className="text-slate-300 mb-2 text-lg">
-        EduVerse 2050 • Building Tomorrow's Minds Today
+        AngkorEdu • Building Tomorrow's Minds Today
       </p>
       <p className="text-slate-400 mb-6">
         Powered by Renewable Energy & Advanced AI • Carbon Neutral Platform

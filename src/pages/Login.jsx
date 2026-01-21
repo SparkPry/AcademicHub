@@ -64,12 +64,7 @@ export default function Login() {
           </div>
         </div>
 
-        {/* <button
-          type="submit"
-          className="mt-6 w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold py-3 rounded-lg transition"
-        >
-          Login
-        </button> */}
+        
         <button
           type="submit"
           disabled={loading}

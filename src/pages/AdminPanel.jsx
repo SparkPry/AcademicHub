@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Users, CreditCard, ShieldCheck } from "lucide-react";
+import EnergyIcons from "../components/EnergyIcons";
+import AssistantButton from "../components/AssistantButton";
+
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState("users");
@@ -17,7 +20,7 @@ export default function AdminPanel() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-8">
+    <div className="min-h-screen dark:bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-8">
       <h1 className="text-4xl font-bold text-center mb-10">Admin Control Panel</h1>
 
       <div className="flex justify-center gap-4 mb-8">
@@ -51,8 +54,8 @@ export default function AdminPanel() {
 
       {/* User Management */}
       {activeTab === "users" && (
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-xl">
-          <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+        <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl shadow-xl">
+          <h2 className="text-2xl text-slate-700 dark:text-slate-50 font-semibold mb-4">User Management</h2>
           <table className="w-full text-left">
             <thead>
               <tr className="text-cyan-400 border-b border-slate-600">
@@ -65,7 +68,7 @@ export default function AdminPanel() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id} className="border-b border-slate-700 hover:bg-slate-700/50">
+                <tr key={user.id} className="text-slate-700 dark:text-slate-50 border-b border-slate-700 hover:bg-slate-700/50">
                   <td className="p-2">{user.id}</td>
                   <td className="p-2">{user.name}</td>
                   <td className="p-2">{user.role}</td>
@@ -84,7 +87,7 @@ export default function AdminPanel() {
 
       {/* Payments */}
       {activeTab === "payments" && (
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-xl">
+        <div className="dark:bg-slate-800 p-6 rounded-2xl shadow-xl">
           <h2 className="text-2xl font-semibold mb-4">Payments Overview</h2>
           <table className="w-full text-left">
             <thead>
@@ -98,7 +101,7 @@ export default function AdminPanel() {
             </thead>
             <tbody>
               {payments.map((payment) => (
-                <tr key={payment.id} className="border-b border-slate-700 hover:bg-slate-700/50">
+                <tr key={payment.id} className="text-slate-900 dark:text-slate-50  border-b border-slate-700 hover:bg-slate-700/50">
                   <td className="p-2">{payment.id}</td>
                   <td className="p-2">{payment.user}</td>
                   <td className="p-2">{payment.course}</td>
@@ -113,15 +116,15 @@ export default function AdminPanel() {
 
       {/* Approve Instructors */}
       {activeTab === "instructors" && (
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-xl">
-          <h2 className="text-2xl font-semibold mb-4">Instructor Approvals</h2>
+        <div className="dark:bg-slate-800 p-6 rounded-2xl shadow-xl">
+          <h2 className="text-slate-700 dark:text-slate-50 text-2xl font-semibold mb-4">Instructor Approvals</h2>
           <ul className="space-y-3">
             {users
               .filter((user) => user.role === "Instructor" && user.status === "Pending")
               .map((instructor) => (
                 <li
                   key={instructor.id}
-                  className="flex justify-between bg-slate-700/40 p-3 rounded-lg"
+                  className="flex justify-between text-slate-700 dark:text-slate-50 bg-slate-50  dark:bg-slate-700/40 p-3 rounded-lg"
                 >
                   <span>{instructor.name}</span>
                   <button className="px-4 py-1 bg-green-500 hover:bg-green-600 rounded-lg text-sm">
@@ -132,6 +135,8 @@ export default function AdminPanel() {
           </ul>
         </div>
       )}
+      <EnergyIcons/>
+      <AssistantButton/>
     </div>
   );
 }
