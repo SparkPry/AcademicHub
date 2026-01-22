@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   const location = useLocation();
 
   // Pages where Navbar + Footer should be hidden
-  const hideNavAndFooter = ["/login", "/signup"].includes(location.pathname);
+  const hideNavAndFooter = ["/login", "/signup","/auth-role","/loginx","/signupx","/instructor","/admin"].includes(location.pathname);
 
   return (
     <>

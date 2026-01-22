@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/navBar";
 import Hero from "../components/Hero";
 import Courses from "../components/Courses";
 import Stats from "../components/Stats";
-import Footer from "../components/Footer";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
 import Particles from "../components/Particles";

@@ -1,28 +1,53 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import coursesDataPage from "../data/courseData";
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  Clock,
+  Star,
+  Users,
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  PlayCircle,
+} from "lucide-react";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
-import { Link } from "react-router-dom";
 import { getLastLesson } from "../utils/progress";
 
-const CoursePage = () => {
+const CourseDT = () => {
   const { slug } = useParams();
 
-  const course = coursesDataPage.find((item) => item.slug === slug);
-
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
   const [expandedSections, setExpandedSections] = useState({});
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
 
-  if (!course) {
-    return (
-      <div className="text-center py-24 text-3xl font-bold">
-        Course Not Found
-      </div>
-    );
-  }
+  // Fetch course data from API
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://e-learning-api-production-a6d4.up.railway.app/api/courses/slug/${slug}`
+        );
+        if (!response.ok) {
+          throw new Error("Course not found");
+        }
+        const data = await response.json();
+        setCourse(data);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching course:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchCourse();
+    }
+  }, [slug]);
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
@@ -31,22 +56,401 @@ const CoursePage = () => {
     }));
   };
 
-  // const openVideoModal = (url) => {
-  //   setVideoUrl(url);
-  //   setVideoModalOpen(true);
-  // };
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+          <p className="text-gray-300 text-lg">Loading course...</p>
+        </div>
+      </div>
+    );
+  }
 
-  // const closeVideoModal = () => {
-  //   setVideoModalOpen(false);
-  //   setVideoUrl("");
-  // };
-
-  // const firstSectionIndex = 0;
-  // const firstLessonIndex = 0;
+  // Error state
+  if (error || !course) {
+    return (
+      <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-300 mb-4">
+            Course Not Found
+          </h2>
+          <p className="text-gray-400 mb-6">{error || "Unable to load course"}</p>
+          <Link
+            to="/courses"
+            className="px-6 py-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg text-white transition"
+          >
+            Back to Courses
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const lastLesson = getLastLesson(course.slug);
+  const firstLesson =
+    course.curriculum && course.curriculum.length > 0
+      ? course.curriculum[0].lessons?.[0]
+      : null;
+  const startLessonSlug = lastLesson || firstLesson?.slug;
 
-  const startLessonSlug = lastLesson || course.curriculum[0].lessons[0].slug;
+  // return (
+  //   <main className="dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 min-h-screen">
+  //     {/* HERO SECTION */}
+  //     <section className="relative py-16 px-4 sm:px-6 lg:px-8 mt-12">
+  //       <div className="max-w-6xl mx-auto">
+  //         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+  //           {/* Left Content */}
+  //           <div className="lg:col-span-2">
+  //             <div className="mb-4 flex items-center gap-2 flex-wrap">
+  //               <span className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-300 text-sm">
+  //                 {course.category || "Course"}
+  //               </span>
+  //               {course.level && (
+  //                 <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/50 rounded-full text-emerald-300 text-sm">
+  //                   {course.level}
+  //                 </span>
+  //               )}
+  //             </div>
+  //             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+  //               {course.title}
+  //             </h1>
+  //             <p className="text-gray-300 text-lg mb-6">
+  //               {course.description}
+  //             </p>
+
+  //             {/* Course Stats */}
+  //             <div className="flex flex-wrap gap-6 mb-8 text-gray-300">
+  //               {course.duration && (
+  //                 <div className="flex items-center gap-2">
+  //                   <Clock className="w-5 h-5 text-cyan-400" />
+  //                   <span>{course.duration}</span>
+  //                 </div>
+  //               )}
+  //               {course.students && (
+  //                 <div className="flex items-center gap-2">
+  //                   <Users className="w-5 h-5 text-cyan-400" />
+  //                   <span>{course.students} students</span>
+  //                 </div>
+  //               )}
+  //               {course.rating && (
+  //                 <div className="flex items-center gap-2">
+  //                   <Star className="w-5 h-5 text-yellow-400" />
+  //                   <span>{course.rating}</span>
+  //                 </div>
+  //               )}
+  //               {course.lessons && (
+  //                 <div className="flex items-center gap-2">
+  //                   <BookOpen className="w-5 h-5 text-cyan-400" />
+  //                   <span>{course.lessons} lessons</span>
+  //                 </div>
+  //               )}
+  //             </div>
+
+  //             {/* CTA Button */}
+  //             {startLessonSlug && (
+  //               <Link
+  //                 to={`/course/${course.slug}/lesson/${startLessonSlug}`}
+  //                 className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold rounded-lg transition duration-300 transform hover:scale-105"
+  //               >
+  //                 <PlayCircle className="w-5 h-5" />
+  //                 {lastLesson ? "Continue Learning" : "Start Learning"}
+  //               </Link>
+  //             )}
+  //           </div>
+
+  //           {/* Right Image */}
+  //           <div className="relative">
+  //             <div className="rounded-2xl overflow-hidden border-2 border-cyan-400/30 shadow-2xl shadow-cyan-400/20">
+  //               <img
+  //                 src={course.thumbnail || course.image}
+  //                 alt={course.title}
+  //                 className="w-full h-auto object-cover"
+  //               />
+  //               <div className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/20 transition">
+  //                 <PlayCircle className="w-16 h-16 text-white opacity-80" />
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+
+  //     {/* TAB NAVIGATION */}
+  //     <div className="sticky top-16 bg-gray-900/80 backdrop-blur border-b border-cyan-400/20 z-30">
+  //       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  //         <nav className="flex gap-8 overflow-x-auto">
+  //           {["overview", "curriculum", "instructor"].map((tab) => (
+  //             <button
+  //               key={tab}
+  //               onClick={() => setActiveTab(tab)}
+  //               className={`py-4 px-2 capitalize font-medium transition-all duration-300 border-b-2 whitespace-nowrap ${
+  //                 activeTab === tab
+  //                   ? "border-cyan-400 text-cyan-400"
+  //                   : "border-transparent text-gray-400 hover:text-gray-200"
+  //               }`}
+  //             >
+  //               {tab}
+  //             </button>
+  //           ))}
+  //         </nav>
+  //       </div>
+  //     </div>
+
+  //     {/* CONTENT */}
+  //     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+  //       {/* MAIN CONTENT */}
+  //       <div className="lg:col-span-2">
+  //         {/* OVERVIEW TAB */}
+  //         {activeTab === "overview" && (
+  //           <div className="space-y-8">
+  //             {/* About Section */}
+  //             {course.about && (
+  //               <section>
+  //                 <h2 className="text-3xl font-bold text-white mb-4">
+  //                   About This Course
+  //                 </h2>
+  //                 {typeof course.about === "string" ? (
+  //                   <p className="text-gray-300 leading-relaxed">
+  //                     {course.about}
+  //                   </p>
+  //                 ) : Array.isArray(course.about) ? (
+  //                   <div className="space-y-3">
+  //                     {course.about.map((item, idx) => (
+  //                       <p key={idx} className="text-gray-300 leading-relaxed">
+  //                         {item}
+  //                       </p>
+  //                     ))}
+  //                   </div>
+  //                 ) : null}
+  //               </section>
+  //             )}
+
+  //             {/* What You'll Learn */}
+  //             {course.learningOutcomes && course.learningOutcomes.length > 0 && (
+  //               <section>
+  //                 <h2 className="text-3xl font-bold text-white mb-4">
+  //                   What You'll Learn
+  //                 </h2>
+  //                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+  //                   {course.learningOutcomes.map((item, idx) => (
+  //                     <div key={idx} className="flex gap-3 text-gray-300">
+  //                       <span className="text-emerald-400 font-bold text-lg">
+  //                         ✔
+  //                       </span>
+  //                       <span>{item}</span>
+  //                     </div>
+  //                   ))}
+  //                 </div>
+  //               </section>
+  //             )}
+
+  //             {/* Requirements */}
+  //             {course.prerequisites && course.prerequisites.length > 0 && (
+  //               <section>
+  //                 <h2 className="text-3xl font-bold text-white mb-4">
+  //                   Prerequisites
+  //                 </h2>
+  //                 <ul className="space-y-2 text-gray-300">
+  //                   {course.prerequisites.map((req, idx) => (
+  //                     <li key={idx}>• {req}</li>
+  //                   ))}
+  //                 </ul>
+  //               </section>
+  //             )}
+  //           </div>
+  //         )}
+
+  //         {/* CURRICULUM TAB */}
+  //         {activeTab === "curriculum" && (
+  //           <div>
+  //             <h2 className="text-3xl font-bold text-white mb-6">
+  //               Course Curriculum
+  //             </h2>
+  //             {course.curriculum && course.curriculum.length > 0 ? (
+  //               <div className="space-y-3">
+  //                 {course.curriculum.map((section, idx) => (
+  //                   <div
+  //                     key={idx}
+  //                     className="border border-gray-700 rounded-lg overflow-hidden hover:border-cyan-400/50 transition"
+  //                   >
+  //                     <button
+  //                       onClick={() => toggleSection(idx)}
+  //                       className="w-full flex justify-between items-center p-4 bg-gray-800/50 hover:bg-gray-800 transition"
+  //                     >
+  //                       <span className="font-semibold text-white">
+  //                         {section.title}
+  //                       </span>
+  //                       <div className="flex items-center gap-2 text-gray-400">
+  //                         <span className="text-sm">
+  //                           {section.lessons?.length || 0} lessons
+  //                         </span>
+  //                         {expandedSections[idx] ? (
+  //                           <ChevronUp className="w-5 h-5" />
+  //                         ) : (
+  //                           <ChevronDown className="w-5 h-5" />
+  //                         )}
+  //                       </div>
+  //                     </button>
+
+  //                     {expandedSections[idx] && (
+  //                       <div className="bg-gray-900/50 px-4 py-3 space-y-2 border-t border-gray-700">
+  //                         {section.lessons && section.lessons.length > 0 ? (
+  //                           section.lessons.map((lesson, lessonIdx) => (
+  //                             <Link
+  //                               key={lesson.id || lessonIdx}
+  //                               to={`/course/${course.slug}/lesson/${lesson.slug}`}
+  //                               className="flex items-center gap-3 p-2 rounded hover:bg-gray-800/50 text-gray-300 hover:text-cyan-400 transition"
+  //                             >
+  //                               <PlayCircle className="w-4 h-4 flex-shrink-0" />
+  //                               <span className="text-sm">{lesson.title}</span>
+  //                             </Link>
+  //                           ))
+  //                         ) : (
+  //                           <p className="text-gray-500 text-sm">
+  //                             No lessons available
+  //                           </p>
+  //                         )}
+  //                       </div>
+  //                     )}
+  //                   </div>
+  //                 ))}
+  //               </div>
+  //             ) : (
+  //               <p className="text-gray-400">No curriculum available</p>
+  //             )}
+  //           </div>
+  //         )}
+
+  //         {/* INSTRUCTOR TAB */}
+  //         {activeTab === "instructor" && (
+  //           <div>
+  //             {course.instructor ? (
+  //               <>
+  //                 <h2 className="text-3xl font-bold text-white mb-6">
+  //                   Course Instructor
+  //                 </h2>
+  //                 <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+  //                   <div className="flex gap-6 items-start mb-6">
+  //                     {course.instructor.avatar && (
+  //                       <img
+  //                         src={course.instructor.avatar}
+  //                         alt={course.instructor.name}
+  //                         className="w-24 h-24 rounded-full object-cover border-2 border-cyan-400/30"
+  //                       />
+  //                     )}
+  //                     <div>
+  //                       <h3 className="text-2xl font-bold text-white mb-1">
+  //                         {course.instructor.name}
+  //                       </h3>
+  //                       {course.instructor.title && (
+  //                         <p className="text-cyan-400 font-medium">
+  //                           {course.instructor.title}
+  //                         </p>
+  //                       )}
+  //                     </div>
+  //                   </div>
+  //                   {course.instructor.bio && (
+  //                     <p className="text-gray-300 leading-relaxed">
+  //                       {course.instructor.bio}
+  //                     </p>
+  //                   )}
+  //                 </div>
+  //               </>
+  //             ) : (
+  //               <p className="text-gray-400">Instructor information not available</p>
+  //             )}
+  //           </div>
+  //         )}
+  //       </div>
+
+  //       {/* SIDEBAR */}
+  //       <aside className="lg:col-span-1">
+  //         <div className="sticky top-32 bg-gradient-to-b from-gray-800 to-gray-900 border border-cyan-400/20 rounded-xl p-6 space-y-6">
+  //           {/* Price */}
+  //           {course.price !== undefined && (
+  //             <div>
+  //               <p className="text-gray-400 text-sm mb-2">Course Price</p>
+  //               <p className="text-3xl font-bold text-cyan-400">
+  //                 {typeof course.price === "number"
+  //                   ? `$${course.price}`
+  //                   : course.price}
+  //               </p>
+  //             </div>
+  //           )}
+
+  //           {/* CTA Button */}
+  //           {startLessonSlug && (
+  //             <Link
+  //               to={`/course/${course.slug}/lesson/${startLessonSlug}`}
+  //               className="block w-full py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 text-white font-semibold rounded-lg text-center transition duration-300 transform hover:scale-105"
+  //             >
+  //               {lastLesson ? "Continue Learning" : "Enroll Now"}
+  //             </Link>
+  //           )}
+
+  //           {/* Course Includes */}
+  //           <div>
+  //             <h4 className="font-semibold text-white mb-3">Course Includes</h4>
+  //             <ul className="space-y-2 text-gray-300 text-sm">
+  //               <li className="flex gap-2">
+  //                 <span className="text-emerald-400">✓</span>
+  //                 <span>Lifetime access</span>
+  //               </li>
+  //               <li className="flex gap-2">
+  //                 <span className="text-emerald-400">✓</span>
+  //                 <span>Certificate of completion</span>
+  //               </li>
+  //               <li className="flex gap-2">
+  //                 <span className="text-emerald-400">✓</span>
+  //                 <span>Downloadable resources</span>
+  //               </li>
+  //               <li className="flex gap-2">
+  //                 <span className="text-emerald-400">✓</span>
+  //                 <span>Mobile access</span>
+  //               </li>
+  //               {course.students && (
+  //                 <li className="flex gap-2">
+  //                   <span className="text-emerald-400">✓</span>
+  //                   <span>{course.students} students enrolled</span>
+  //                 </li>
+  //               )}
+  //             </ul>
+  //           </div>
+
+  //           {/* Course Details */}
+  //           <div className="pt-4 border-t border-gray-700 space-y-3">
+  //             {course.level && (
+  //               <div>
+  //                 <p className="text-gray-400 text-xs uppercase tracking-wide">
+  //                   Level
+  //                 </p>
+  //                 <p className="text-white font-medium">{course.level}</p>
+  //               </div>
+  //             )}
+  //             {course.language && (
+  //               <div>
+  //                 <p className="text-gray-400 text-xs uppercase tracking-wide">
+  //                   Language
+  //                 </p>
+  //                 <p className="text-white font-medium">{course.language}</p>
+  //               </div>
+  //             )}
+  //           </div>
+  //         </div>
+  //       </aside>
+  //     </div>
+
+  //     <EnergyIcons />
+  //     <AssistantButton />
+  //   </main>
+  // );
+
+
+
+
+
 
   return (
     <main className="dark:bg-gradient-to-b from-slate-900 dark:text-gray-50 via-slate-800 to-slate-900">
@@ -85,7 +489,7 @@ const CoursePage = () => {
             <div className="max-w-sm w-full">
               <div className="relative">
                 <img
-                  src={course.image}
+                  src={course.thumbnail}
                   alt={course.title}
                   className="rounded-xl w-full"
                 />
@@ -126,42 +530,53 @@ const CoursePage = () => {
           {/* OVERVIEW */}
           {activeTab === "overview" && (
             <>
-              <section className="mb-10 ">
-                <h2 className="text-3xl font-bold mb-4 dark:text-gray-50">
-                  About This Course
-                </h2>
-                {course.overview.about.map((text, i) => (
-                  <p key={i} className="text-gray-700 dark:text-gray-300 mb-3">
-                    {text}
-                  </p>
-                ))}
-              </section>
+              <h2 className="text-3xl font-bold mb-6">About This Course</h2>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {course.long_description}
+              </p>
 
-              <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-4">What You'll Learn</h2>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {course.overview.learn.map((item, i) => (
-                    <div key={i} className="flex gap-3">
-                      <span className="text-green-500">✔</span>
-                      <span>{item}</span>
-                    </div>
-                  ))}
+              {course.learningOutcomes && course.learningOutcomes.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-2xl font-bold mb-4">
+                    What You'll Learn
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {course.learningOutcomes.map((item, i) => (
+                      <div key={i} className="flex gap-3">
+                        <span className="text-green-500">✔</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </section>
+              )}
 
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Requirements</h2>
-                <ul className="space-y-2">
-                  {course.overview.requirements.map((req, i) => (
-                    <li key={i}>• {req}</li>
-                  ))}
-                </ul>
-              </section>
+              {course.prerequisites && course.prerequisites.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-2xl font-bold mb-4">Prerequisites</h3>
+                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                    {course.prerequisites.map((prereq, i) => (
+                      <li key={i}>{prereq}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {course.prerequisites && course.prerequisites.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-2xl font-bold mb-4">Prerequisites</h3>
+                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                    {course.prerequisites.map((prereq, i) => (
+                      <li key={i}>{prereq}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </>
           )}
 
           {/* CURRICULUM */}
-          {activeTab === "curriculum" && (
+          {/* {activeTab === "curriculum" && (
             <>
               <h2 className="text-3xl font-bold mb-6">Course Curriculum</h2>
               {course.curriculum.map((section, idx) => (
@@ -190,10 +605,10 @@ const CoursePage = () => {
                 </div>
               ))}
             </>
-          )}
+          )} */}
 
           {/* INSTRUCTOR */}
-          {activeTab === "instructor" && (
+          {/* {activeTab === "instructor" && (
             <div>
               <div className="flex gap-6 items-center">
                 <img
@@ -213,7 +628,7 @@ const CoursePage = () => {
                 {course.instructor.bio}
               </p>
             </div>
-          )}
+          )} */}
 
           {/* REVIEWS */}
           {activeTab === "reviews" && (
@@ -234,7 +649,7 @@ const CoursePage = () => {
       </div>
 
       {/* VIDEO MODAL */}
-      {videoModalOpen && (
+      {/* {videoModalOpen && (
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
           <div className="bg-white rounded-lg w-full max-w-4xl">
             <div className="flex justify-between p-4 border-b">
@@ -251,7 +666,7 @@ const CoursePage = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       <EnergyIcons />
       <AssistantButton />
@@ -259,4 +674,291 @@ const CoursePage = () => {
   );
 };
 
-export default CoursePage;
+export default CourseDT;
+
+
+
+// import React, { useState, useEffect } from "react";
+// import { useParams } from "react-router-dom";
+// import EnergyIcons from "../components/EnergyIcons";
+// import AssistantButton from "../components/AssistantButton";
+// import { Link } from "react-router-dom";
+// import { getLastLesson } from "../utils/progress";
+
+// const CoursePage = () => {
+//   const { slug } = useParams();
+
+//   const [course, setCourse] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [activeTab, setActiveTab] = useState("overview");
+//   const [expandedSections, setExpandedSections] = useState({});
+//   const [videoModalOpen, setVideoModalOpen] = useState(false);
+//   const [videoUrl, setVideoUrl] = useState("");
+
+//   useEffect(() => {
+//     const fetchCourse = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await fetch(
+//           `https://e-learning-api-production-a6d4.up.railway.app/api/courses/slug/${slug}`
+//         );
+//         if (!response.ok) {
+//           throw new Error("Course not found");
+//         }
+//         const data = await response.json();
+//         setCourse(data);
+//         setError(null);
+//       } catch (err) {
+//         console.error("Error fetching course:", err);
+//         setError(err.message);
+//         setCourse(null);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     if (slug) {
+//       fetchCourse();
+//     }
+//   }, [slug]);
+
+//   if (loading) {
+//     return (
+//       <div className="text-center py-24 text-3xl font-bold">
+//         Loading course...
+//       </div>
+//     );
+//   }
+
+//   if (error || !course) {
+//     return (
+//       <div className="text-center py-24 text-3xl font-bold">
+//         Course Not Found
+//       </div>
+//     );
+//   }
+
+//   const toggleSection = (index) => {
+//     setExpandedSections((prev) => ({
+//       ...prev,
+//       [index]: !prev[index],
+//     }));
+//   };
+
+//   const lastLesson = getLastLesson(course.slug);
+
+//   const startLessonSlug = lastLesson || course.curriculum[0].lessons[0].slug;
+
+  // return (
+  //   <main className="dark:bg-gradient-to-b from-slate-900 dark:text-gray-50 via-slate-800 to-slate-900">
+  //     {/* ================= COURSE HEADER ================= */}
+  //     {/* dark:bg-slate-800/30 border-2 border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50 */}
+  //     <section className="relative dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-16 mt-16 transition-all duration-500  ">
+  //       <div className="container mx-auto p-8dark:bg-slate-800/30 border-2 border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50 ">
+  //         <div className="flex flex-col lg:flex-row gap-10 items-center">
+  //           {/* Info */}
+  //           <div className="lg:w-2/3">
+  //             <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+  //               {course.title}
+  //             </h1>
+  //             <p className="text-gray-700 dark:text-gray-300 mb-6">
+  //               {course.description}
+  //             </p>
+
+  //             {/* <button className="px-8 py-3 bg-yellow-600 hover:bg-yellow-500 rounded-lg text-white text-lg">
+  //               Join Class
+  //             </button> */}
+  //             {/* <Link
+  //               to={`/course/${course.slug}/lesson/${course.curriculum[0].lessons[0].slug}`}
+  //               className="px-8 py-3 bg-yellow-600 hover:bg-yellow-500 rounded-lg text-white text-lg"
+  //             >
+  //               View Details
+  //             </Link> */}
+  //             <Link
+  //               to={`/course/${course.slug}/lesson/${startLessonSlug}`}
+  //               className="px-8 py-3 bg-green-600 hover:bg-green-500 rounded-lg text-white"
+  //             >
+  //               {lastLesson ? "Continue Learning" : "Start Learning"}
+  //             </Link>
+  //           </div>
+
+  //           {/* Image */}
+  //           <div className="max-w-sm w-full">
+  //             <div className="relative">
+  //               <img
+  //                 src={course.image}
+  //                 alt={course.title}
+  //                 className="rounded-xl w-full"
+  //               />
+  //               <button className="absolute inset-0 flex items-center justify-center text-white text-4xl bg-black/30 rounded-xl">
+  //                 ▶
+  //               </button>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+
+  //     {/* ================= TABS ================= */}
+  //     <div className="sticky top-16 bg-white dark:bg-gray-800 border-b z-10">
+  //       <div className="container  mx-auto px-4">
+  //         <nav className="flex gap-8 py-4">
+  //           {["overview", "curriculum", "instructor", "reviews"].map((tab) => (
+  //             <button
+  //               key={tab}
+  //               onClick={() => setActiveTab(tab)}
+  //               className={`pb-2 capitalize ${
+  //                 activeTab === tab
+  //                   ? "border-b-2 border-blue-600 font-semibold text-blue-600"
+  //                   : "text-gray-500 dark:text-gray-50 hover:text-blue-600"
+  //               }`}
+  //             >
+  //               {tab}
+  //             </button>
+  //           ))}
+  //         </nav>
+  //       </div>
+  //     </div>
+
+  //     {/* ================= CONTENT ================= */}
+  //     <div className="container  mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+  //       {/* LEFT */}
+  //       <div className="lg:col-span-2">
+  //         {/* OVERVIEW */}
+  //         {activeTab === "overview" && (
+  //           <>
+  //             <section className="mb-10 ">
+  //               <h2 className="text-3xl font-bold mb-4 dark:text-gray-50">
+  //                 About This Course
+  //               </h2>
+  //               {course.overview.about.map((text, i) => (
+  //                 <p key={i} className="text-gray-700 dark:text-gray-300 mb-3">
+  //                   {text}
+  //                 </p>
+  //               ))}
+  //             </section>
+
+  //             <section className="mb-10">
+  //               <h2 className="text-3xl font-bold mb-4">What You'll Learn</h2>
+  //               <div className="grid md:grid-cols-2 gap-3">
+  //                 {course.overview.learn.map((item, i) => (
+  //                   <div key={i} className="flex gap-3">
+  //                     <span className="text-green-500">✔</span>
+  //                     <span>{item}</span>
+  //                   </div>
+  //                 ))}
+  //               </div>
+  //             </section>
+
+  //             <section>
+  //               <h2 className="text-3xl font-bold mb-4">Requirements</h2>
+  //               <ul className="space-y-2">
+  //                 {course.overview.requirements.map((req, i) => (
+  //                   <li key={i}>• {req}</li>
+  //                 ))}
+  //               </ul>
+  //             </section>
+  //           </>
+  //         )}
+
+  //         {/* CURRICULUM */}
+  //         {activeTab === "curriculum" && (
+  //           <>
+  //             <h2 className="text-3xl font-bold mb-6">Course Curriculum</h2>
+  //             {course.curriculum.map((section, idx) => (
+  //               <div key={idx} className="border rounded-md mb-4">
+  //                 <button
+  //                   onClick={() => toggleSection(idx)}
+  //                   className="w-full flex justify-between p-4 font-semibold"
+  //                 >
+  //                   <span>{section.title}</span>
+  //                   <span>{section.lessons.length} lessons</span>
+  //                 </button>
+
+  //                 {expandedSections[idx] && (
+  //                   <div className="px-6 pb-4 space-y-2">
+  //                     {section.lessons.map((lesson, lessonIndex) => (
+  //                       <Link
+  //                         key={lesson.id}
+  //                         to={`/course/${course.slug}/lesson/${course.curriculum[0].lessons[0].slug}`}
+  //                         className="block hover:text-blue-600"
+  //                       >
+  //                         {lesson.title}
+  //                       </Link>
+  //                     ))}
+  //                   </div>
+  //                 )}
+  //               </div>
+  //             ))}
+  //           </>
+  //         )}
+
+  //         {/* INSTRUCTOR */}
+  //         {activeTab === "instructor" && (
+  //           <div>
+  //             <div className="flex gap-6 items-center">
+  //               <img
+  //                 src={course.instructor.avatar}
+  //                 alt={course.instructor.name}
+  //                 className="w-20 h-20 rounded-full"
+  //               />
+  //               <div>
+  //                 <h3 className="text-xl font-bold">
+  //                   {course.instructor.name}
+  //                 </h3>
+  //                 <p className="text-gray-500">{course.instructor.title}</p>
+  //               </div>
+  //             </div>
+
+  //             <p className="mt-6 text-gray-700 dark:text-gray-300">
+  //               {course.instructor.bio}
+  //             </p>
+  //           </div>
+  //         )}
+
+  //         {/* REVIEWS */}
+  //         {activeTab === "reviews" && (
+  //           <p className="text-gray-600">Reviews feature coming soon 🚀</p>
+  //         )}
+  //       </div>
+
+  //       {/* RIGHT */}
+  //       <aside className="sticky top-24 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+  //         <h3 className="text-2xl font-bold mb-4">Course Includes</h3>
+  //         <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+  //           <li>✔ Lifetime access</li>
+  //           <li>✔ Certificate</li>
+  //           <li>✔ Downloadable resources</li>
+  //           <li>✔ Mobile & TV access</li>
+  //         </ul>
+  //       </aside>
+  //     </div>
+
+  //     {/* VIDEO MODAL */}
+  //     {videoModalOpen && (
+  //       <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
+  //         <div className="bg-white rounded-lg w-full max-w-4xl">
+  //           <div className="flex justify-between p-4 border-b">
+  //             <h3 className="font-semibold">Lesson Video</h3>
+  //             <button onClick={closeVideoModal}>✕</button>
+  //           </div>
+  //           <div className="aspect-video">
+  //             <iframe
+  //               src={videoUrl}
+  //               className="w-full h-full"
+  //               allowFullScreen
+  //               title="Video"
+  //             />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     )}
+
+  //     <EnergyIcons />
+  //     <AssistantButton />
+  //   </main>
+  // );
+// };
+
+// export default CoursePage;

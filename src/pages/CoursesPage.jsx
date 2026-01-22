@@ -1,29 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Clock, Star, PlayCircle, X } from "lucide-react";
-import courseData from "../data/courseData";
 import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
-import { useParams } from "react-router-dom";
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "" });
   const [hoveredCard, setHoveredCard] = useState(null);
   const [mousePos, setMousePos] = useState({ x: null, y: null });
 
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-   const categories = [
+  useEffect(() => {
+    // Replace with your API URL
+    fetch("https://e-learning-api-production-a6d4.up.railway.app/api/courses")
+      .then((res) => res.json())
+      .then((data) => {
+        setCourses(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching courses:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+          <p className="text-gray-300 text-lg">Loading course...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const categories = [
     "All",
-    ...new Set(courseData.map((course) => course.category)),
+    ...new Set(courses.map((course) => course.category)),
   ];
 
   const filteredCourses =
     selectedCategory === "All"
-      ? courseData
-      : courseData.filter((c) => c.category === selectedCategory);
-
+      ? courses
+      : courses.filter((c) => c.category === selectedCategory);
 
   return (
     <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-24 px-auto">
@@ -33,7 +56,7 @@ export default function CoursesPage() {
           Explore Courses
         </h1>
         <p className="text-slate-400 dark:slate-300 mt-4 text-lg">
-          Learn cutting-edge topics designed for the Education 2050 Era 
+          Learn cutting-edge topics designed for the Education 2050 Era
         </p>
       </div>
 
@@ -75,7 +98,7 @@ export default function CoursesPage() {
               }}
             >
               <img
-                src={course.image}
+                src={course.thumbnail}
                 alt={course.title}
                 className="rounded-xl mb-4 border border-cyan-400/20 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transition-all"
               />
@@ -106,95 +129,15 @@ export default function CoursesPage() {
                   />
                   <p>LearnKH</p>
                 </div>
-                <span>$40</span>
+                <span>{course.price}</span>
               </div>
             </div>
           </Link>
         ))}
       </div>
 
-      {/* ===== Enroll Modal ===== */}
-      {selectedCourse && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in-up">
-          <div className="bg-slate-900/90 border border-cyan-400/30 rounded-2xl shadow-2xl w-96 max-w-full p-6 text-white relative">
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedCourse(null)}
-              className="absolute top-3 right-3 text-slate-400 hover:text-red-400 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Title */}
-            <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              Enroll in {selectedCourse.title}
-            </h2>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm text-slate-300 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  required
-                  className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-slate-300 mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  required
-                  className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-cyan-400/30 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 font-semibold hover:scale-105 transition-transform"
-              >
-                Confirm Enrollment
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
       <EnergyIcons />
       <AssistantButton />
     </div>
   );
-}
-{
-  /* <button
-              onClick={() => handleEnrollClick(course)}
-              className="mt-5 w-full py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 font-semibold hover:scale-105 transition-transform"
-            >
-              Enroll Now
-            </button> */
-}
-
-// ================================================================
-{
-  /* <div>
-              <Link
-                to={`/course/${course.id}`}
-                className="mt-4 block text-center py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 font-semibold hover:scale-105 transition-transform"
-              >
-                View Details
-              </Link>
-            </div> */
 }

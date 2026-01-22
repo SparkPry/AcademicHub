@@ -6,14 +6,15 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import CoursesPage from "./pages/CoursesPage";
-import CourseDetail from "./pages/CourseDetail";
 // import Dashboard from "./pages/Dashboard";
 import InstructorPanel from "./pages/InstructorPanel";
 import AdminPanel from "./pages/AdminPanel";
 import MyCourses from "./dashboard/MyCourses";
-import CourseDetails from "./pages/CourseDetails";
 import CoursesDT from "./pages/CourseDT";
 import LessonPage from "./pages/LessonPage";
+import AuthRole from "./pages/Auth_role";
+import LoginX from "./pages/LoginX";
+import SignUpX from "./pages/SignUpX";
 function App() {
   return (
     <AuthProvider>
@@ -21,8 +22,11 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/auth-role" element={<AuthRole />} />
+            <Route path="/loginx" element={<LoginX />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signupx" element={<SignUpX />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/course/:slug" element={<CoursesDT />} />
             {/* <Route path="/course/:id" element={<CourseDetail />} /> */}
