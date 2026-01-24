@@ -1,9 +1,8 @@
-
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginX = () => {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -14,45 +13,61 @@ const LoginX = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("https://e-learning-api-production-a6d4.up.railway.app/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch(
+        "https://e-learning-api-production-a6d4.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          
+          body: JSON.stringify(form),
+        },
+        
+      );
+      const data = await res.json();
 
-    const data = await res.json();
+      if (!res.ok) {
 
-    if (!res.ok) {
-      alert(data.message || "Login failed");
-      return;
+        alert(data.message || "Login failed");
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Store what backend ACTUALLY returns
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+
+      // ✅ Role-based redirect
+      if (data.role === "student") {
+        navigate("/");
+      } else if (data.role === "instructor") {
+        navigate("/instructor");
+      } else if (data.role === "admin") {
+        navigate("/admin");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    } finally {
+      setLoading(false);
     }
-
-    // ✅ Store what backend ACTUALLY returns
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.role);
-
-    alert("Login successful!");
-
-    // ✅ Role-based redirect
-    if (data.role === "student") {
-      navigate("/");
-    } else if (data.role === "instructor") {
-      navigate("/instructor");
-    } else if (data.role === "admin") {
-      navigate("/admin");
+    // Loading state
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+            <p className="text-gray-300 text-lg">Loading course...</p>
+          </div>
+        </div>
+      );
     }
-
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
-  }
-};
+  };
 
   return (
     <div
