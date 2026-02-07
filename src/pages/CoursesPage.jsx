@@ -3,6 +3,7 @@ import { BookOpen, Clock, Star, PlayCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
+import api from "../services/api";
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -11,20 +12,19 @@ export default function CoursesPage() {
 
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // Replace with your API URL
-    fetch("https://e-learning-api-production-a6d4.up.railway.app/api/courses")
-      .then((res) => res.json())
-      .then((data) => {
-        setCourses(data);
+    const fetchCourse = async () => {
+      try{
+        const res = await api.get("/courses");
+        setCourses(res.data);
+      }catch (err) {
+        console.error("Error fetching course:",err);
+      }finally{
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching courses:", err);
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
+    fetchCourse();
+  })
 
   // Loading state
   if (loading) {
@@ -49,7 +49,7 @@ export default function CoursesPage() {
       : courses.filter((c) => c.category === selectedCategory);
 
   return (
-    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-24 px-auto">
+    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-24 px-8">
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h1 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
@@ -66,11 +66,11 @@ export default function CoursesPage() {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-5 py-2 rounded-full border-2 border-cyan-400/40 transition-all duration-300 
+            className={`px-5 py-2 rounded-full border dark:border dark:border-cyan-300 transition-all duration-300 
               ${
                 selectedCategory === cat
                   ? "bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 font-semibold"
-                  : "text-cyan-300 hover:bg-cyan-400/20"
+                  : " text-gray-800 dark:text-cyan-500 hover:bg-cyan-400/20"
               }`}
           >
             {cat}
@@ -83,7 +83,7 @@ export default function CoursesPage() {
         {filteredCourses.map((course) => (
           <Link key={course.id} to={`/course/${course.slug}`}>
             <div
-              className="group relative dark:bg-slate-800/30 border-2 border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50"
+              className="group relative h-full flex flex-col dark:bg-slate-800/30 shadow dark:border-2 dark:border-cyan-400/20 rounded-3xl p-5 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50"
               onMouseEnter={() => setHoveredCard(course.id)}
               onMouseLeave={() => {
                 setHoveredCard(null);
@@ -102,7 +102,7 @@ export default function CoursesPage() {
                 alt={course.title}
                 className="rounded-xl mb-4 border border-cyan-400/20 group-hover:shadow-lg group-hover:shadow-cyan-400/50 transition-all"
               />
-              <h2 className="text-xl font-bold mb-2 text-cyan-400 group-hover:text-emerald-400 transition-colors">
+              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-cyan-400 transition-colors">
                 {course.title}
               </h2>
               <p className="text-slate-400 dark:text-slate-300 text-sm mb-4">
@@ -120,7 +120,7 @@ export default function CoursesPage() {
                 </div>
               </div>
 
-              <div className="flex justify-between items-center mt-6 text-lg font-bold text-cyan-400">
+              <div className="flex justify-between items-center mt-auto text-lg font-bold text-gray-900 dark:text-cyan-400">
                 <div className="flex gap-4">
                   <img
                     className="w-10 rounded-full"
@@ -129,7 +129,7 @@ export default function CoursesPage() {
                   />
                   <p>LearnKH</p>
                 </div>
-                <span>{course.price}</span>
+                <span className="text-emerald-400 dark:text-cyan-400">${course.price}</span>
               </div>
             </div>
           </Link>

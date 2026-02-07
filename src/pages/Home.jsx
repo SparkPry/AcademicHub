@@ -32,11 +32,11 @@ export default function Home() {
         {/* <!-- Why Choose Us --> */}
         <section class="py-20 dark:bg-[#111A2E] dark:text-white transition-colors duration-300">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl md:text-6xl font-bold text-cyan-500 mb-8 dark:text-white">
+              Why Choose AngkorEdu?
+            </h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 class="text-5xl md:text-6xl font-bold text-slate-900 mb-8 dark:text-white">
-                  Why Choose AngkorEdu?
-                </h2>
                 <div class="space-y-6">
                   <div class="flex items-start">
                     <div class="flex-shrink-0">

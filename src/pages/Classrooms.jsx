@@ -1,23 +1,111 @@
-const Classrooms = () => {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">
-        Your Classrooms
-      </h2>
+// import api from "../services/api"; // your axios instance
+// import { useEffect, useState } from "react";
+// const Classrooms = () => {
 
-      <div className="bg-white p-6 rounded-xl border border-gray-200">
-        <h3 className="font-semibold text-gray-800">
-          Introduction to AI with Teachable Machine
-        </h3>
-        <p className="text-sm text-gray-500 mt-1">
-          Progress: 61.5%
+//   return (
+//             <div className="bg-white rounded-xl p-6 border">
+//         <h3 className="font-semibold mb-4">Your Courses</h3>
+
+//         {courses.map(course => (
+//           <div key={course.courseId} className="border rounded-lg p-4 mb-3">
+//             <h4 className="font-semibold">{course.title}</h4>
+//             <p className="text-sm text-gray-500">
+//               Progress: {course.progress}%
+//             </p>
+
+//             <div className="w-full bg-gray-200 h-2 rounded mt-2">
+//               <div
+//                 className="h-2 bg-teal-500 rounded"
+//                 style={{ width: `${course.progress}%` }}
+//               />
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//   );
+// };
+
+// export default Classrooms;
+
+import { useEffect, useState } from "react";
+import api from "../services/api"; // your axios instance
+
+const Classrooms = () => {
+  const [loading, setLoading] = useState(true);
+  const [dashboard, setDashboard] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await api.get("/student/dashboard");
+        setDashboard(res.data);
+      } catch (err) {
+        console.error("Dashboard fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboard();
+  }, []);
+
+  if (loading) return <p className="text-gray-500">Loading dashboard...</p>;
+
+  const { courses } = dashboard;
+
+  return (
+<div className="w-full mx-auto p-6 bg-white rounded-xl">
+  {/* COURSES */}
+  <div className="space-y-4">
+    <h3 className="text-xl font-semibold text-gray-800">Your Courses</h3>
+    {courses.map(course => (
+      <div 
+        key={course.courseId} 
+        className="bg-white rounded-xl p-6 border border-teal-50 shadow-sm hover:shadow-md transition-shadow"
+      >
+        <div className="flex items-start justify-between mb-3">
+          <h4 className="font-semibold text-gray-800 flex-1 pr-2">
+            {course.title}
+          </h4>
+          <span className="text-sm font-medium text-teal-600 whitespace-nowrap">
+            {course.progress}%
+          </span>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+          <div
+            className="h-2 bg-teal-500 rounded-full transition-all duration-300 ease-out"
+            style={{ width: `${course.progress}%` }}
+          />
+        </div>
+
+        {/* Status */}
+        <p className="text-xs text-gray-500 mt-3">
+          {course.progress === 100 
+            ? '✓ Completed' 
+            : course.progress > 0 
+              ? 'In Progress' 
+              : 'Not Started'}
         </p>
 
-        <button className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg">
-          Continue Learning
-        </button>
+        {/* Optional: Continue Learning Button */}
+        {course.progress > 0 && course.progress < 100 && (
+          <button className="w-full mt-4 bg-teal-100 hover:bg-teal-300 hover:scale-102 cursor-pointer text-teal-700 font-medium py-2 px-4 rounded-lg text-sm transition-colors">
+            Continue Learning
+          </button>
+        )}
       </div>
-    </div>
+    ))}
+
+    {/* Empty State */}
+    {courses.length === 0 && (
+      <div className="bg-white rounded-xl p-8 border text-center">
+        <p className="text-gray-400 text-sm">No courses enrolled yet</p>
+      </div>
+    )}
+  </div>
+</div>
   );
 };
 

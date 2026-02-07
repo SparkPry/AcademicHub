@@ -21,6 +21,8 @@ import DashboardX from "./pages/DashboardX";
 import Classrooms from "./pages/Classrooms";
 import Settings from "./pages/Settings";
 import StudentLayout from "./layouts/StudentLayout";
+import ContactPage from "./pages/Contact";
+import AboutUs from "./pages/About";
 function App() {
   return (
     <Layout>
@@ -35,6 +37,8 @@ function App() {
          <Route path="/admin" element={<AdminPanel />} />
         <Route path="/instructor" element={<InstructorPanel />} />
         <Route path="/mycourses" element={<MyCourses />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutUs />} />
         {/* <Route path="/student" element={<DashboardX />} /> */}
       <Route path="/student" element={
 

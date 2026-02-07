@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
+import api from "../services/api";
 
 const LoginX = () => {
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,34 +19,18 @@ const LoginX = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      const res = await fetch(
-        "https://e-learning-api-production-a6d4.up.railway.app/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          
-          body: JSON.stringify(form),
-        },
-        
-      );
-      const data = await res.json();
+      const res = await api.post("/auth/login", form);
+      const data = res.data;
 
-      if (!res.ok) {
-
-        alert(data.message || "Login failed");
-        setLoading(false);
-        return;
-      }
-
-      // ✅ Store what backend ACTUALLY returns
+      // Store token and role
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
 
-      // ✅ Role-based redirect
+      // Role-based redirect
       if (data.role === "student") {
         navigate("/");
       } else if (data.role === "instructor") {
@@ -52,127 +40,130 @@ const LoginX = () => {
       }
     } catch (err) {
       console.error(err);
-      alert("Server error");
+      setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
-    }
-    // Loading state
-    if (loading) {
-      return (
-        <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-            <p className="text-gray-300 text-lg">Loading course...</p>
-          </div>
-        </div>
-      );
     }
   };
 
   return (
-    <div
-      id="loginPage"
-      className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4"
-    >
-      <div className="flex max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-        {/* Left Side Illustration */}
-        <div className="hidden md:flex md:w-1/2 illustration p-12 items-center justify-center relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-500"></div>
-
-          <div className="relative z-10 text-center">
-            <div className="flex justify-center space-x-4 mb-8">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg"
-                >
-                  <svg
-                    className="w-6 h-6 text-gray-700"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
-                  </svg>
-                </div>
-              ))}
-            </div>
-
-            <div className="relative mx-auto w-64 h-40">
-              <div className="bg-gray-800 rounded-t-lg p-2 h-32">
-                <div className="bg-white rounded h-full relative overflow-hidden">
-                  <div className="absolute top-2 left-2 w-2 h-2 bg-red-400 rounded-full"></div>
-                  <div className="absolute top-2 left-6 w-2 h-2 bg-yellow-400 rounded-full"></div>
-                  <div className="absolute top-2 left-10 w-2 h-2 bg-green-400 rounded-full"></div>
-
-                  <div className="mt-8 px-4">
-                    <div className="h-1 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-1 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-1 bg-blue-400 rounded w-3/4"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-700 h-2 rounded-b-lg"></div>
-              <div className="bg-gray-600 h-4 w-20 mx-auto rounded-b-lg"></div>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center py-12 px-4 mt-16">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-2">
+            Welcome Back
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 text-lg">
+            Sign in to your AngkorEdu account
+          </p>
         </div>
 
-        {/* Right Side Form */}
-        <div className="w-full md:w-1/1.5 p-16 flex items-center justify-center">
-          <div className="w-full max-w-lg">
-            <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">
-              Login
-            </h2>
+        {/* Card */}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl dark:shadow-cyan-500/10 border border-gray-200 dark:border-cyan-500/20 p-8">
+          {/* Error Alert */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 rounded-lg flex gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+            </div>
+          )}
 
-            <form className="space-y-8" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Email Address
+              </label>
               <div className="relative">
+                <Mail className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full px-6 py-4 pr-14 text-lg border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="you@example.com"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition"
                   required
                 />
               </div>
+            </div>
 
+            {/* Password Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                Password
+              </label>
               <div className="relative">
+                <Lock className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
-                  className="w-full px-6 py-4 pr-14 text-lg border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="••••••••"
+                  className="w-full pl-12 pr-12 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className="w-full py-4 text-lg text-white font-semibold rounded-xl bg-blue-600 hover:shadow-lg transition-all"
-              >
-                Login
-              </button>
-            </form>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-600 hover:to-emerald-600 disabled:from-gray-400 disabled:to-gray-400 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/50 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Signing in...
+                </span>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
 
-            <div className="mt-8 flex justify-between text-base">
-              <a
-                href="/signupx"
-                className="text-blue-600 hover:text-blue-800 transition-colors"
-              >
-                Create an account
-              </a>
-              <button className="text-blue-600 hover:text-blue-800">
-                Forgot password?
-              </button>
+          {/* Divider */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-slate-600"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white dark:bg-slate-800 text-gray-500 dark:text-gray-400">
+                Don't have an account?
+              </span>
             </div>
           </div>
+
+          {/* Sign Up Link */}
+          <Link
+            to="/signupx"
+            className="block w-full py-3 px-4 border-2 border-cyan-400 text-cyan-600 dark:text-cyan-400 font-semibold rounded-lg hover:bg-cyan-50 dark:hover:bg-slate-700/50 transition text-center"
+          >
+            Create an Account
+          </Link>
         </div>
+
+        {/* Footer */}
+        <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-6">
+          By signing in, you agree to our Terms of Service and Privacy Policy
+        </p>
       </div>
     </div>
   );
-};
+}
+
 
 export default LoginX;
