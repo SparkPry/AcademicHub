@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Linkedin } from "lucide-react";
+import Logo from "../assets/imgs/Academic hub.png";
 export default function Footer() {
 
   return (
@@ -9,11 +10,11 @@ export default function Footer() {
         
         {/* Organized by */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-300 mb-4">Develop by</h3>
-          <img src="./imgs/lastLogoISTAD.png" alt="ISTAD Logo" className="w-[200px] mx-auto md:mx-0" />
+          <h3 className="text-lg font-semibold text-gray-300 mb-4">Organized by</h3>
+          <img src={Logo} alt="academic hub" className="w-[150px] mx-auto md:mx-0" />
           <div className="text-sm mt-4">
-            <div className="font-medium">Institute of Science and Technology</div>
-            <div>Advanced Development</div>
+            <div className="font-medium">Academic Hub</div>
+            <div>Build Skills, Shape Your Future</div>
           </div>
         </div>
 

@@ -12,8 +12,8 @@ const StudentLayout = () => {
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-6 border-b border-gray-200 font-bold text-xl">
-          AngkorEdu
+        <div className="p-6 border-b border-gray-200 font-bold text-2xl">
+          Academic Hub
         </div>
 
         <nav className="p-4 space-y-2">

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
 import api from "../services/api";
+import Logo from "../assets/imgs/Academic hub.png";
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -124,10 +125,10 @@ export default function CoursesPage() {
                 <div className="flex gap-4">
                   <img
                     className="w-10 rounded-full"
-                    src="https://i.pinimg.com/736x/eb/76/a4/eb76a46ab920d056b02d203ca95e9a22.jpg"
+                    src={Logo}
                     alt=""
                   />
-                  <p>LearnKH</p>
+                  <p>Academic Hub</p>
                 </div>
                 <span className="text-emerald-400 dark:text-cyan-400">${course.price}</span>
               </div>

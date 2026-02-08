@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-
+import Logo from "../assets/imgs/Academic hub.png";
 export default function Navbar() {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
@@ -20,12 +20,13 @@ export default function Navbar() {
       <nav className="fixed top-0 w-full z-50 bg-white dark:bg-slate-900/70 backdrop-blur-xl border-b dark:border-cyan-500/20 transition-all duration-300 dark:hover:bg-slate-900/90">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           {/* Logo */}
-          <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-pulse">
+          <div className=" flex gap-2 text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-pulse">
+            <img src={Logo} alt="Academic Hub Logo" className="w-10 h-10" />
             <Link
               className="text-black hover:text-cyan-400 dark:text-slate-300 dark:hover:text-cyan-400"
               to="/"
             >
-              𝐀𝐧𝐠𝐤𝐨𝐫𝐄𝐝𝐮
+              Academic Hub
             </Link>
           </div>
 

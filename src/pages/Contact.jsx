@@ -118,18 +118,18 @@ function ContactPage() {
             Contact Details
           </h3>
           <p className="text-gray-700 dark:text-gray-300">
-            <i className="fa-solid fa-envelope"></i> info@skillstack.co.uk
+            <i className="fa-solid fa-envelope"></i> sansopheak686@gmail.com
           </p>
           <p className="text-gray-700 dark:text-gray-300">
-            <i className="fa-solid fa-phone"></i> 01943 885086
+            <i className="fa-solid fa-phone"></i> 0978901984
           </p>
           <p className="text-gray-700 dark:text-gray-300">
             <i className="fa-solid fa-clock"></i> Mon–Fri 09:00–17:30
           </p>
-          <p className="text-gray-700 dark:text-gray-300">
+          {/* <p className="text-gray-700 dark:text-gray-300">
             <i className="fa-solid fa-location-dot"></i> Leeds - UK Head Office<br />
             The Coach Works, 21 The Calls, Leeds, LS2 7EH
-          </p>
+          </p> */}
           <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
             Together we're going to take our vision of learning that drives
             change even further.

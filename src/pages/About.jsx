@@ -12,7 +12,7 @@ export default function AboutUs() {
           </h1>
           <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             Welcome to{" "}
-            <span className="font-bold text-cyan-500">SkillStack</span>, where
+            <span className="font-bold text-cyan-500">Academic Hub</span>, where
             learners gain practical, career‑ready skills through accessible and
             flexible education.
           </p>
@@ -24,7 +24,7 @@ export default function AboutUs() {
               Browse Courses
             </Link>
             <Link
-              to="/auth"
+              to="/auth-role"
               className="border border-gray-300 dark:border-slate-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors duration-200"
             >
               Start Free Trial
