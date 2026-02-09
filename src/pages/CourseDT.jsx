@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
-import { getLastLesson } from "../utils/progress";
+
 import api from "../services/api";
 import { getMyEnrollments } from "../services/studentApi";
 
@@ -131,12 +131,7 @@ const CourseDT = () => {
     }
   }
 
-  const lastLesson = getLastLesson(course.slug);
-  const firstLesson =
-    course.curriculum && course.curriculum.length > 0
-      ? course.curriculum[0].lessons?.[0]
-      : null;
-  const startLessonSlug = lastLesson || firstLesson?.slug;
+
 
   return (
     <main className="dark:bg-gradient-to-b from-slate-900 dark:text-gray-50 via-slate-800 to-slate-900">

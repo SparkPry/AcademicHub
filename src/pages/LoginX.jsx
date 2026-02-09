@@ -55,7 +55,7 @@ const LoginX = () => {
             Welcome Back
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Sign in to your AngkorEdu account
+            Sign in to your Academic Hub account
           </p>
         </div>
 

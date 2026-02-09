@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  BrowserRouter,
 } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
@@ -10,13 +9,13 @@ import Home from "./pages/Home";
 import CoursesPage from "./pages/CoursesPage";
 import InstructorPanel from "./pages/InstructorPanel";
 import AdminPanel from "./pages/AdminPanel";
-import MyCourses from "./dashboard/MyCourses";
+import ProtectedRoute from "./components/PrivateRoute";
 import CoursesDT from "./pages/CourseDT";
-import LessonPage from "./pages/LessonPage";
+
 import AuthRole from "./pages/Auth_role";
 import LoginX from "./pages/LoginX";
 import SignUpX from "./pages/SignUpX";
-import ProtectedRoute from "./context/ProtectedRoute";
+
 import DashboardX from "./pages/DashboardX";
 import Classrooms from "./pages/Classrooms";
 import Settings from "./pages/Settings";
@@ -36,7 +35,7 @@ function App() {
         <Route path="/course/:slug" element={<CoursesDT />} />
          <Route path="/admin" element={<AdminPanel />} />
         <Route path="/instructor" element={<InstructorPanel />} />
-        <Route path="/mycourses" element={<MyCourses />} />
+        {/* <Route path="/mycourses" element={<MyCourses />} /> */}
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about" element={<AboutUs />} />
         {/* <Route path="/student" element={<DashboardX />} /> */}
