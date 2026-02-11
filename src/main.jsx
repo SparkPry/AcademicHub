@@ -4,10 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
+const basename =
+  import.meta.env.VITE_DEPLOY_ENV === "gh-pages" ? "/AcademicHub" : "/";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  
   <React.StrictMode>
-    <BrowserRouter basename="/AcademicHub">
+    <BrowserRouter basename={basename}>
       <AuthProvider>
         <App />
       </AuthProvider>
