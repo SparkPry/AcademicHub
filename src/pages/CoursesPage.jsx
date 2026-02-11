@@ -25,7 +25,7 @@ export default function CoursesPage() {
       }
     };
     fetchCourse();
-  })
+  },[]);
 
   // Loading state
   if (loading) {
