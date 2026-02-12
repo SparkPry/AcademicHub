@@ -132,3 +132,69 @@
 .hover\:rotate-360:hover {
   transform: rotate(360deg);
 }
+/* ===== Mobile Responsiveness ===== */
+/* Reduce animation intensity on mobile devices */
+@media (max-width: 768px) {
+  .animate-particle-fast,
+  .animate-float,
+  .animate-building-glow,
+  .animate-sway,
+  .animate-holo-float,
+  .animate-card-float,
+  .animate-energy-pulse,
+  .animate-assistant-pulse {
+    animation-duration: 6s !important;
+  }
+
+  /* Optimize hover scales on mobile */
+  .hover\:scale-105:hover {
+    transform: scale(1.02) !important;
+  }
+
+  .hover\:scale-110:hover {
+    transform: scale(1.05) !important;
+  }
+
+  /* Disable some animations to improve performance on mobile */
+  .animate-sway {
+    animation: none;
+  }
+
+  /* Reduce motion for accessibility and performance */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ===== Tablet Adjustments ===== */
+@media (min-width: 640px) and (max-width: 1024px) {
+  .animate-card-float {
+    animation-duration: 6s ease-in-out infinite;
+  }
+}
+
+/* ===== Ensure touch-friendly buttons ===== */
+button, a {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Responsive Images ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Prevent horizontal scroll on mobile ===== */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}

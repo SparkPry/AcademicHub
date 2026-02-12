@@ -20,13 +20,13 @@ export default function EnergyIcons() {
   }, [darkMode]);
 
   return (
-    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4 items-center">
+    <div className="fixed right-3 sm:right-6 bottom-6 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 flex gap-3 sm:flex-col sm:gap-4 items-center">
       <button
         onClick={() => setDarkMode(!darkMode)}
-        className="w-14 h-14 dark:bg-slate-800/60 backdrop-blur-md border-2 border-cyan-400/30 rounded-full flex items-center justify-center text-cyan-400 cursor-pointer transition-all duration-300 hover:scale-125 hover:border-cyan-400/80 hover:shadow-lg hover:shadow-cyan-400/50 animate-energy-pulse"
+        className="w-11 h-11 sm:w-14 sm:h-14 dark:bg-slate-800/60 backdrop-blur-md border-2 border-cyan-400/30 rounded-full flex items-center justify-center text-cyan-400 cursor-pointer transition-all duration-300 hover:scale-110 sm:hover:scale-125 hover:border-cyan-400/80 hover:shadow-lg hover:shadow-cyan-400/50 animate-energy-pulse flex-shrink-0"
         title="Toggle Dark Mode"
       >
-        {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+        {darkMode ? <Sun className="w-5 h-5 sm:w-6 sm:h-6" /> : <Moon className="w-5 h-5 sm:w-6 sm:h-6" />}
       </button>
     </div>
   );

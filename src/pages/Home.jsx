@@ -30,176 +30,171 @@ export default function Home() {
 
       <div>
         {/* <!-- Why Choose Us --> */}
-        <section class="py-20 dark:bg-[#111A2E] dark:text-white transition-colors duration-300">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl md:text-6xl font-bold text-cyan-500 mb-8 dark:text-white">
+        <section className="py-12 sm:py-16 md:py-20 dark:bg-[#111A2E] dark:text-white transition-colors duration-300">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-6 sm:mb-8 dark:text-white">
               Why Choose AngkorEdu?
             </h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start lg:items-center">
               <div>
-                <div class="space-y-6">
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Self-paced learning
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Learn at your own speed with lifetime access to course
-                        materials.
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+                        Learn at your own speed with lifetime access to course materials.
                       </p>
                     </div>
                   </div>
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Expert instructors and mentorship
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Learn from industry professionals with years of
-                        experience.
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+                        Learn from industry professionals with years of experience.
                       </p>
                     </div>
                   </div>
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Flexible online learning experience
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Access courses from anywhere, on any device, at any
-                        time.
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+                        Access courses from anywhere, on any device, at any time.
                       </p>
                     </div>
                   </div>
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Advanced skill-level training
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Progress from beginner to advanced with structured
-                        learning paths.
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+                        Progress from beginner to advanced with structured learning paths.
                       </p>
                     </div>
                   </div>
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Internationally recognized
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
                         Earn certificates recognized by employers worldwide.
                       </p>
                     </div>
                   </div>
-                  <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                      <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <svg
-                          class="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                     </div>
-                    <div class="ml-4">
-                      <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                         Build an impressive portfolio
                       </h3>
-                      <p class="text-gray-600 dark:text-gray-400">
-                        Create real projects that showcase your skills to
-                        potential employers.
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">
+                        Create real projects that showcase your skills to potential employers.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="relative">
+              <div className="relative">
                 <img
                   src={why}
-                  alt=""
-                  class="rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+                  alt="Why Choose Us"
+                  className="w-full rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </div>

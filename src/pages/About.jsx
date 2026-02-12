@@ -3,29 +3,29 @@ import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
 export default function AboutUs() {
   return (
-    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-24 px-8">
-      <div className="max-w-6xl mx-auto ">
+    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8">
+      <div className="max-w-6xl mx-auto">
         {/* Hero */}
-        <section className="mb-16 sm:mb-20 text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-cyan-500 mb-6">
+        <section className="mb-12 sm:mb-16 md:mb-20 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-4 sm:mb-6">
             About Us
           </h1>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed px-2">
             Welcome to{" "}
             <span className="font-bold text-cyan-500">Academic Hub</span>, where
             learners gain practical, career‑ready skills through accessible and
             flexible education.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 px-2">
             <Link
               to="/courses"
-              className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-transform duration-200"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white px-5 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:scale-105 transition-transform duration-200 text-sm sm:text-base whitespace-nowrap"
             >
               Browse Courses
             </Link>
             <Link
               to="/auth-role"
-              className="border border-gray-300 dark:border-slate-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors duration-200"
+              className="border border-gray-300 dark:border-slate-600 px-5 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
             >
               Start Free Trial
             </Link>
@@ -35,16 +35,16 @@ export default function AboutUs() {
         {/* Mission & Vision */}
         <section
           aria-labelledby="mission-vision-heading"
-          className="mb-16 sm:mb-20 grid md:grid-cols-2 gap-8 lg:gap-12"
+          className="mb-12 sm:mb-16 md:mb-20 grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12"
         >
-          <div className="bg-white dark:bg-slate-800/50 p-8 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
+          <div className="bg-white dark:bg-slate-800/50 p-6 sm:p-8 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
             <h2
               id="mission-heading"
-              className="text-2xl sm:text-3xl font-bold text-cyan-500 mb-4"
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-cyan-500 mb-3 sm:mb-4"
             >
               Mission
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
               Transform learning with technology and expert instruction,
               focusing on real‑world skills for the future.
             </p>

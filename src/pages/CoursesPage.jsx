@@ -50,24 +50,24 @@ export default function CoursesPage() {
       : courses.filter((c) => c.category === selectedCategory);
 
   return (
-    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-24 px-8">
+    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8">
       {/* Hero Section */}
-      <div className="max-w-6xl mx-auto text-center mb-12">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+      <div className="max-w-6xl mx-auto text-center mb-8 sm:mb-10 md:mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent px-2">
           Explore Courses
         </h1>
-        <p className="text-slate-400 dark:slate-300 mt-4 text-lg">
+        <p className="text-slate-400 dark:slate-300 mt-3 sm:mt-4 text-sm sm:text-base md:text-lg px-2">
           Learn cutting-edge topics designed for the Education 2050 Era
         </p>
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 px-2">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-5 py-2 rounded-full border dark:border dark:border-cyan-300 transition-all duration-300 
+            className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full border dark:border text-xs sm:text-sm dark:border-cyan-300 transition-all duration-300 whitespace-nowrap
               ${
                 selectedCategory === cat
                   ? "bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 font-semibold"
@@ -80,7 +80,7 @@ export default function CoursesPage() {
       </div>
 
       {/* Course Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
         {filteredCourses.map((course) => (
           <Link key={course.id} to={`/course/${course.slug}`}>
             <div

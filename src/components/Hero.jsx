@@ -75,15 +75,15 @@ export default function Hero() {
         })}
       </div>
       {/* Hero Content */}
-      <div className="relative z-30 text-center max-w-5xl animate-fade-in-up">
-        <h1 className="text-7xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-holo-float drop-shadow-2xl">
+      <div className="relative z-30 text-center max-w-5xl animate-fade-in-up px-4 sm:px-6">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 sm:mb-6 bg-gradient-to-r from-white via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-holo-float drop-shadow-2xl">
           Learn Beyond Boundaries
         </h1>
-        <p className="text-2xl md:text-3xl text-slate-900 dark:text-slate-300 mb-12 animate-fade-in-delayed">
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-900 dark:text-slate-300 mb-8 sm:mb-12 animate-fade-in-delayed">
           Where Innovation Meets Sustainability
         </p>
         <Link
-          className="group relative px-12 py-5 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-100 rounded-full text-xl font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105"
+          className="group relative inline-block px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-100 rounded-full text-sm sm:text-base md:text-lg lg:text-xl font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105"
           to="/courses"
         >
           <span className="relative z-10">Start Your Journey</span>

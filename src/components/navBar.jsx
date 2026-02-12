@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Logo from "../assets/imgs/Academic-hub.png";
@@ -7,6 +7,21 @@ export default function Navbar() {
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Close sidebar and track screen size
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setShowSidebar(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -18,47 +33,47 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 w-full z-50 bg-white dark:bg-slate-900/70 backdrop-blur-xl border-b dark:border-cyan-500/20 transition-all duration-300 dark:hover:bg-slate-900/90">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex justify-between items-center gap-2">
           {/* Logo */}
-          <div className=" flex gap-2 text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-pulse">
-            <img src={Logo} alt="Academic Hub Logo" className="w-10 h-10" />
+          <div className="flex gap-1 sm:gap-2 text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-pulse flex-shrink-0">
+            <img src={Logo} alt="Academic Hub Logo" className="w-8 h-8 sm:w-10 sm:h-10" />
             <Link
-              className="text-black hover:text-cyan-400 dark:text-slate-300 dark:hover:text-cyan-400"
+              className="text-black hover:text-cyan-400 dark:text-slate-300 dark:hover:text-cyan-400 truncate"
               to="/"
             >
               Academic Hub
             </Link>
           </div>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex gap-8 items-center">
+          {/* Desktop Nav Links - Only show on md and above */}
+          <div className="hidden md:flex gap-4 lg:gap-8 items-center text-sm lg:text-base">
             <Link
-              className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors"
+              className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors whitespace-nowrap"
               to="/courses"
             >
               Courses
             </Link>
-            <Link className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors" to="/about">
+            <Link className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors whitespace-nowrap" to="/about">
               About Us
             </Link>
-            <Link className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors" to="/contact">
+            <Link className="text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors whitespace-nowrap" to="/contact">
               Contacts
             </Link>
           </div>
 
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex space-x-4">
+          {/* Desktop Auth Buttons - Only show on md and above */}
+          <div className="hidden md:flex gap-2 lg:gap-4 flex-shrink-0">
             {!token ? (
               <>
                 <Link
                   to="/loginx"
-                  className="group relative px-4 py-2 bg-gradient-to-r from-cyan-50 to-emerald-50 text-slate-900 border border-gray-400 rounded-lg font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105"
+                  className="group relative px-3 lg:px-4 py-2 bg-gradient-to-r from-cyan-50 to-emerald-50 text-slate-900 border border-gray-400 rounded-lg text-xs lg:text-sm font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105 whitespace-nowrap"
                 >
                   Login
                 </Link>
                 <Link
                   to="/signupx"
-                  className="group relative px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 rounded-lg font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105"
+                  className="group relative px-3 lg:px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 rounded-lg text-xs lg:text-sm font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105 whitespace-nowrap"
                 >
                   Sign Up
                 </Link>
@@ -72,60 +87,62 @@ export default function Navbar() {
                       ? "/instructor"
                       : "/admin"
                 }
-                className="group relative px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-600 text-slate-100 rounded-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105"
+                className="group relative px-3 lg:px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-600 text-slate-100 rounded-full text-xs lg:text-sm font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-400/50 hover:scale-105 whitespace-nowrap"
               >
                 Dashboard
               </Link>
             )}
           </div>
 
-          {/* Mobile Hamburger Menu */}
-          <button
-            className="md:hidden flex items-center text-gray-800 dark:text-slate-300 hover:text-cyan-400"
-            onClick={() => setShowSidebar(!showSidebar)}
-          >
-            {showSidebar ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Hamburger Menu - Only render on mobile screens */}
+          {isMobile && (
+            <button
+              className="flex items-center text-gray-800 dark:text-slate-300 hover:text-cyan-400 flex-shrink-0"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
+              {showSidebar ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+            </button>
+          )}
         </div>
 
-        {/* Mobile Sidebar */}
-        {showSidebar && (
-          <div className="md:hidden bg-white dark:bg-slate-800 border-t dark:border-cyan-500/20 p-4 space-y-4">
+        {/* Mobile Sidebar - Only render on mobile screens */}
+        {isMobile && showSidebar && (
+          <div className="bg-white dark:bg-slate-800 border-t dark:border-cyan-500/20 p-3 sm:p-4 space-y-3 sm:space-y-4">
             <Link
-              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2"
+              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2 text-sm sm:text-base"
               to="/courses"
               onClick={() => setShowSidebar(false)}
             >
               Courses
             </Link>
             <Link
-              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2"
+              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2 text-sm sm:text-base"
               to="/about"
               onClick={() => setShowSidebar(false)}
             >
               About Us
             </Link>
             <Link
-              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2"
+              className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2 text-sm sm:text-base"
               to="/contact"
               onClick={() => setShowSidebar(false)}
             >
               Contacts
             </Link>
 
-            <div className="pt-4 border-t dark:border-cyan-500/20 space-y-3">
+            <div className="pt-3 sm:pt-4 border-t dark:border-cyan-500/20 space-y-2 sm:space-y-3">
               {!token ? (
                 <>
                   <Link
                     to="/loginx"
-                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-50 to-emerald-50 text-slate-900 border border-gray-400 rounded-lg font-bold transition-all hover:shadow-lg"
+                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-50 to-emerald-50 text-slate-900 border border-gray-400 rounded-lg text-sm font-bold transition-all hover:shadow-lg"
                     onClick={() => setShowSidebar(false)}
                   >
                     Login
                   </Link>
                   <Link
                     to="/signupx"
-                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 rounded-lg font-bold transition-all hover:shadow-lg"
+                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-900 rounded-lg text-sm font-bold transition-all hover:shadow-lg"
                     onClick={() => setShowSidebar(false)}
                   >
                     Sign Up
@@ -141,14 +158,14 @@ export default function Navbar() {
                           ? "/instructor"
                           : "/admin"
                     }
-                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-600 text-slate-100 rounded-full font-bold transition-all hover:shadow-lg"
+                    className="block text-center px-4 py-2 bg-gradient-to-r from-cyan-400 to-emerald-600 text-slate-100 rounded-full text-sm font-bold transition-all hover:shadow-lg"
                     onClick={() => setShowSidebar(false)}
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-bold transition-all"
+                    className="block w-full text-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-bold transition-all"
                   >
                     Logout
                   </button>
