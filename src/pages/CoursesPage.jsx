@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
 import AssistantButton from "../components/AssistantButton";
 import api from "../services/api";
-import Logo from "../assets/imgs/Academic-hub.png";
+import Logo from "../assets/imgs/Acad.png";
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
