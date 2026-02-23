@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Logo from "../assets/imgs/Acad.png";
 export default function Navbar() {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
+  const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  // Close sidebar and track screen size
+  // Close sidebar on route change (especially helpful on mobile).
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (!mobile) {
-        setShowSidebar(false);
-      }
-    };
+    setShowSidebar(false);
+  }, [location.pathname]);
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // Prevent background scroll when the mobile menu is open.
+  useEffect(() => {
+    if (!showSidebar) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [showSidebar]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -94,20 +95,25 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Hamburger Menu - Only render on mobile screens */}
-          {isMobile && (
-            <button
-              className="flex items-center text-gray-800 dark:text-slate-300 hover:text-cyan-400 flex-shrink-0"
-              onClick={() => setShowSidebar(!showSidebar)}
-            >
-              {showSidebar ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-            </button>
-          )}
+          {/* Mobile Hamburger Menu - Only show on mobile screens */}
+          <button
+            type="button"
+            aria-label={showSidebar ? "Close menu" : "Open menu"}
+            aria-controls="mobile-nav"
+            aria-expanded={showSidebar}
+            className="flex md:hidden lg:hidden p-2 -mr-1 rounded-lg items-center text-gray-800 dark:text-slate-300 hover:text-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 flex-shrink-0"
+            onClick={() => setShowSidebar((open) => !open)}
+          >
+            {showSidebar ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+          </button>
         </div>
 
         {/* Mobile Sidebar - Only render on mobile screens */}
-        {isMobile && showSidebar && (
-          <div className="bg-white dark:bg-slate-800 border-t dark:border-cyan-500/20 p-3 sm:p-4 space-y-3 sm:space-y-4">
+        {showSidebar && (
+          <div
+            id="mobile-nav"
+            className="md:hidden flex flex-col bg-white dark:bg-slate-800 border-t dark:border-cyan-500/20 p-3 sm:p-4 space-y-3 sm:space-y-4 max-h-[calc(100vh-4rem)]"
+          >
             <Link
               className="block text-gray-800 dark:text-slate-300 hover:text-cyan-400 dark:hover:text-cyan-400 transition-colors py-2 text-sm sm:text-base"
               to="/courses"
@@ -130,7 +136,7 @@ export default function Navbar() {
               Contacts
             </Link>
 
-            <div className="pt-3 sm:pt-4 border-t dark:border-cyan-500/20 space-y-2 sm:space-y-3">
+            <div className="pt-3 sm:pt-4 border-t dark:border-cyan-500/20 flex flex-col gap-2 sm:gap-3">
               {!token ? (
                 <>
                   <Link

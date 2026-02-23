@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Courses from "../components/Courses";
 import Stats from "../components/Stats";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 import Particles from "../components/Particles";
 import why from "../assets/imgs/why.jpg";
 
@@ -17,7 +17,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 overflow-x-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-slate-50 via-cyan-50 to-slate-100 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-slate-900 dark:text-slate-200 overflow-x-hidden">
       {/* Floating Particles */}
       <Particles />
       {/* Hero Section */}
@@ -30,7 +30,7 @@ export default function Home() {
 
       <div>
         {/* <!-- Why Choose Us --> */}
-        <section className="py-12 sm:py-16 md:py-20 dark:bg-[#111A2E] dark:text-white transition-colors duration-300">
+        <section className="py-12 sm:py-16 md:py-20 bg-white dark:bg-[#111A2E] text-slate-900 dark:text-white transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-6 sm:mb-8 dark:text-white">
               Why Choose AngkorEdu?
@@ -206,7 +206,8 @@ export default function Home() {
       <Stats />
 
       {/* AI Assistant Button */}
-      <AssistantButton />
+      {/* <AssistantButton /> */}
+      <EnergyIcons />
 
       {/* You can keep all your CSS keyframes in global CSS */}
     </div>

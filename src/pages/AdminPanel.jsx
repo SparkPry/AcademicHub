@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Users, CreditCard, ShieldCheck } from "lucide-react";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 
 
 export default function AdminPanel() {
@@ -136,7 +136,7 @@ export default function AdminPanel() {
         </div>
       )}
       <EnergyIcons/>
-      <AssistantButton/>
+      {/* <AssistantButton/> */}
     </div>
   );
 }

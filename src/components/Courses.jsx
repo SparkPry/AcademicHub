@@ -24,7 +24,7 @@ export default function Courses() {
         {courses.map((course, i) => (
           <Link key={i} to="/courses">
             <div
-              className="group relative h-full flex flex-col bg-white dark:bg-slate-900 shadow dark:border-2 dark:border-cyan-400/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/40 hover:border-cyan-400/60 animate-card-float overflow-hidden"
+              className="group relative h-full flex flex-col bg-white dark:bg-slate-900 shadow dark:border-2 dark:border-cyan-400/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 backdrop-blur-xl cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-400/30 hover:border-emerald-400/60 overflow-hidden"
               style={{ animationDelay: `${i * 0.5}s` }}
               onMouseEnter={() => setActiveCard(i)}
               onMouseLeave={() => setActiveCard(null)}

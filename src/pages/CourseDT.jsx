@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 
 import api from "../services/api";
 import { getMyEnrollments } from "../services/studentApi";
@@ -368,7 +368,7 @@ const CourseDT = () => {
         </div>
       )}
       <EnergyIcons />
-      <AssistantButton />
+      {/* <AssistantButton /> */}
     </main>
   );
 };

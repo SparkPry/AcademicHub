@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BookOpen, Clock, Star, PlayCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 import api from "../services/api";
 import Logo from "../assets/imgs/Acad.png";
 
@@ -50,7 +50,7 @@ export default function CoursesPage() {
       : courses.filter((c) => c.category === selectedCategory);
 
   return (
-    <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8">
+    <div className="relative min-h-screen bg-gradient-to-b from-slate-50 via-cyan-50 to-slate-100 dark:bg-gradient-to-b dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-slate-900 dark:text-slate-200 py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8">
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto text-center mb-8 sm:mb-10 md:mb-12">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent px-2">
@@ -138,7 +138,7 @@ export default function CoursesPage() {
       </div>
 
       <EnergyIcons />
-      <AssistantButton />
+      {/* <AssistantButton /> */}
     </div>
   );
 }

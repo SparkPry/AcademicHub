@@ -132,6 +132,15 @@
 .hover\:rotate-360:hover {
   transform: rotate(360deg);
 }
+/* ===== Reduce Motion (Global) ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ===== Mobile Responsiveness ===== */
 /* Reduce animation intensity on mobile devices */
 @media (max-width: 768px) {
@@ -159,15 +168,6 @@
   .animate-sway {
     animation: none;
   }
-
-  /* Reduce motion for accessibility and performance */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
 }
 
 /* ===== Tablet Adjustments ===== */
@@ -178,7 +178,7 @@
 }
 
 /* ===== Ensure touch-friendly buttons ===== */
-button, a {
+button:not([aria-label*="menu"]), a {
   min-height: 44px;
   min-width: 44px;
   display: inline-flex;

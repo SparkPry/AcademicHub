@@ -16,7 +16,7 @@ export default function Stats() {
         {stats.map((stat, i) => (
           <div
             key={i}
-            className="group text-center p-4 sm:p-6 md:p-8 bg-gradient-to-br from-cyan-500/5 to-emerald-500/5 border border-cyan-400/20 rounded-xl sm:rounded-2xl transition-all duration-300 hover:-translate-y-4 hover:border-cyan-400/60 hover:shadow-xl hover:shadow-cyan-400/20"
+            className="group text-center p-4 sm:p-6 md:p-8 bg-gradient-to-br from-cyan-500/5 to-emerald-500/5 border border-cyan-400/20 rounded-xl sm:rounded-2xl transition-all duration-300 hover:border-cyan-400/60 hover:shadow-lg hover:shadow-cyan-400/30 hover:ring-1 hover:ring-cyan-400/40"
           >
             <div className="flex justify-center mb-3 sm:mb-4 text-cyan-400 group-hover:scale-110 transition-transform duration-300 text-lg sm:text-xl">
               {iconMap[stat.icon]}

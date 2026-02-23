@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 export default function AboutUs() {
   return (
     <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8">
@@ -118,7 +118,7 @@ export default function AboutUs() {
       </div>
 
       <EnergyIcons />
-      <AssistantButton />
+      {/* <AssistantButton /> */}
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function Hero() {
         style={{ transform: `translateY(${scrollY * 0.1}px)` }}
         className="absolute bottom-0 left-0 right-0 h-2/3 z-10"
       >
-        <div className="absolute inset-0 dark:bg-gradient-to-t from-slate-900 to-transparent" />
+        <div className="absolute inset-0 dark:bg-gradient-to-t from-slate-500 to-transparent" />
         {[
           { left: "5%", width: "120px", height: "400px", delay: 0 },
           { left: "20%", width: "100px", height: "350px", delay: 0.5 },
@@ -30,7 +30,7 @@ export default function Hero() {
         ].map((building, i) => (
           <div
             key={i}
-            className="absolute bottom-0 bg-gradient-to-t from-slate-800/60 to-emerald-900/40 border border-cyan-500/30 backdrop-blur-sm animate-building-glow"
+            className="absolute bottom-0 bg-gradient-to-t from-slate-800/60 to-emerald-500/40 border border-cyan-500/30 backdrop-blur-sm"
             style={{
               ...building,
               animationDelay: `${building.delay}s`,
@@ -61,7 +61,7 @@ export default function Hero() {
           return (
             <div
               key={i}
-              className="absolute opacity-60 animate-sway text-cyan-400"
+              className="absolute opacity-60 text-cyan-400"
               style={{
                 top: props.top,
                 left: props.left,
@@ -76,7 +76,7 @@ export default function Hero() {
       </div>
       {/* Hero Content */}
       <div className="relative z-30 text-center max-w-5xl animate-fade-in-up px-4 sm:px-6">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 sm:mb-6 bg-gradient-to-r from-white via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-holo-float drop-shadow-2xl">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 sm:mb-6 bg-gradient-to-r from-cyan-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-holo-float drop-shadow-2xl">
           Learn Beyond Boundaries
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-900 dark:text-slate-300 mb-8 sm:mb-12 animate-fade-in-delayed">

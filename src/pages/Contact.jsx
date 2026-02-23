@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EnergyIcons from "../components/EnergyIcons";
-import AssistantButton from "../components/AssistantButton";
+// import AssistantButton from "../components/AssistantButton";
 function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -205,7 +205,7 @@ function ContactPage() {
       </div>
 
       <EnergyIcons />
-      <AssistantButton />
+      {/* <AssistantButton /> */}
     </div>
   );
 }
