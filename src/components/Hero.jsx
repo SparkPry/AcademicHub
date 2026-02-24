@@ -17,7 +17,7 @@ export default function Hero() {
       {/* Futuristic Cityscape */}
       <div
         style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-        className="absolute bottom-0 left-0 right-0 h-2/3 z-10"
+        className="absolute bottom-0 left-0 right-0 h-2/3 z-10 scale-[0.8] sm:scale-[0.85] md:scale-[0.9] lg:scale-100 origin-bottom"
       >
         <div className="absolute inset-0 dark:bg-gradient-to-t from-slate-500 to-transparent" />
         {[
@@ -53,7 +53,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-20 pointer-events-none">
         {[
           { Icon: Sprout, top: "25%", left: "8%", delay: 0 },
-          { Icon: Trees, top: "35%", left: "28%", delay: 1 },
+          { Icon: Trees, top: "20%", left: "28%", delay: 1 },
           { Icon: Leaf, top: "28%", right: "25%", delay: 2 },
           { Icon: Wind, top: "40%", right: "10%", delay: 1.5 },
         ].map((nature, i) => {
@@ -69,7 +69,7 @@ export default function Hero() {
                 animationDelay: `${props.delay}s`,
               }}
             >
-              <Icon className="w-16 h-16" strokeWidth={1.5} />
+              <Icon className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16" strokeWidth={1.5} />
             </div>
           );
         })}

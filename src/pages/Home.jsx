@@ -33,7 +33,7 @@ export default function Home() {
         <section className="py-12 sm:py-16 md:py-20 bg-white dark:bg-[#111A2E] text-slate-900 dark:text-white transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-6 sm:mb-8 dark:text-white">
-              Why Choose AngkorEdu?
+              Why Choose Academic Hub?
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start lg:items-center">
               <div>
