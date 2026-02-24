@@ -6,7 +6,7 @@ export default function AboutUs() {
     <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Hero */}
-        <section className="mb-12 sm:mb-16 md:mb-20 text-center">
+        <section className="mb-12 sm:mb-16 md:mb-20 text-center mt-10">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-4 sm:mb-6">
             About Us
           </h1>

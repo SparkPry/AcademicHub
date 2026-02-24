@@ -44,8 +44,8 @@ function ContactPage() {
         <div className="relative min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Contact Intro */}
-      <div className="text-center mb-8 sm:mb-10 mt-8 sm:mt-12 md:mt-16">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-500 dark:text-cyan-400">
+      <div className="text-center mb-8 sm:mb-10 mt-10 sm:mt-12 md:mt-16">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-cyan-500 mb-4 sm:mb-6">
           Get in touch
         </h1>
         <p className="mt-2 text-gray-700 dark:text-gray-300">
