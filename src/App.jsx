@@ -19,6 +19,7 @@ import SignUpX from "./pages/SignUpX";
 import DashboardX from "./pages/DashboardX";
 import Classrooms from "./pages/Classrooms";
 import Settings from "./pages/Settings";
+import Lessons from "./pages/Lessons";
 import StudentLayout from "./layouts/StudentLayout";
 import ContactPage from "./pages/Contact";
 import AboutUs from "./pages/About";
@@ -48,6 +49,7 @@ function App() {
           <Route index element={<DashboardX />} />
           <Route path="classes" element={<Classrooms />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="courses/:courseId/lessons" element={<Lessons />} />
         </Route>
         {/* Protected Routes */}
         {/* <Route path="/student" element={<ProtectedRoute>

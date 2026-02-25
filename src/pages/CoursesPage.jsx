@@ -13,13 +13,22 @@ export default function CoursesPage() {
 
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   useEffect(() => {
     const fetchCourse = async () => {
       try{
         const res = await api.get("/courses");
         setCourses(res.data);
+        setError("");
       }catch (err) {
-        console.error("Error fetching course:",err);
+        const status = err?.response?.status;
+        const statusText = err?.response?.statusText;
+        const message =
+          status
+            ? `Server error (${status}${statusText ? ` ${statusText}` : ""}). Please try again.`
+            : "Could not reach the server. Check your connection and try again.";
+        setError(message);
+        console.error("Error fetching course:", err);
       }finally{
         setLoading(false);
       }
@@ -34,6 +43,16 @@ export default function CoursesPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
           <p className="text-gray-300 text-lg">Loading course...</p>
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="text-center max-w-md mx-auto px-4">
+          <p className="text-red-400 text-lg font-semibold mb-2">Unable to load courses</p>
+          <p className="text-gray-300 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -57,7 +76,7 @@ export default function CoursesPage() {
           Explore Courses
         </h1>
         <p className="text-slate-400 dark:slate-300 mt-3 sm:mt-4 text-sm sm:text-base md:text-lg px-2">
-          Learn cutting-edge topics designed for the Education 2050 Era
+          Discover a wide range of courses across various subjects. Whether you're looking to learn something new or enhance your skills, we have the perfect course for you. Browse through our categories and find the right fit for your learning journey.
         </p>
       </div>
 
